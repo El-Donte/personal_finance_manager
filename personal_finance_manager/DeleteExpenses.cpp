@@ -36,7 +36,7 @@ System::Void personalfinancemanager::DeleteExpenses::button_Ok_Click(System::Obj
 			return;
 		}
 
-		query = "UPDATE [Cards] SET Balance=" + "Balance" + "+" + summ + " WHERE id =" + number;
+		query = "UPDATE [Cards] SET Balance=" + "Balance" + "+" + summ + " WHERE Number =" + "'"+number+"'";
 		dbCommand = gcnew OleDbCommand(query, dbConnection);
 
 		if (dbCommand->ExecuteNonQuery() != 1) {

@@ -44,7 +44,7 @@ System::Void personalfinancemanager::AddExpenses::button_Ok_Click(System::Object
 
 		dbConnection->Open();
 
-		String^ query = "SELECT Balance FROM [Cards] where id =" + number;
+		String^ query = "SELECT Balance FROM [Cards] where Number =" + "'"+number+"'";
 		OleDbCommand^ dbCommand = gcnew OleDbCommand(query, dbConnection);
 		OleDbDataReader^ rdr = dbCommand->ExecuteReader();
 
@@ -62,7 +62,11 @@ System::Void personalfinancemanager::AddExpenses::button_Ok_Click(System::Object
 		while (dbReader->Read()) {
 			count++;
 		}
-		String^ id = (count + 1).ToString();
+		
+		int id = count + 1;
+		if (count+1 == id) {
+			id++;
+		}
 
 		query = "INSERT INTO [Expenses] VALUES (?,?,?,?,?)";
 		dbCommand = gcnew OleDbCommand(query, dbConnection);
@@ -71,7 +75,7 @@ System::Void personalfinancemanager::AddExpenses::button_Ok_Click(System::Object
 		dbCommand->Parameters->AddWithValue("Category", category);
 		dbCommand->Parameters->AddWithValue("Summ", summ);
 		dbCommand->Parameters->AddWithValue("Dater", date.Date);
-		dbCommand->Parameters->AddWithValue("ID", id);
+		dbCommand->Parameters->AddWithValue("ID", id.ToString());
 
 		if (dbCommand->ExecuteNonQuery() != 1) {
 			MessageBox::Show("Ошибка данных", "Error");
@@ -80,7 +84,7 @@ System::Void personalfinancemanager::AddExpenses::button_Ok_Click(System::Object
 			return;
 		}
 
-		query = "UPDATE [Cards] SET Balance=" + "Balance" + "-" + summ + " WHERE id =" + number;
+		query = "UPDATE [Cards] SET Balance=" + "Balance" + "-" + summ + " WHERE Number =" + "'"+number + "'";
 		dbCommand = gcnew OleDbCommand(query, dbConnection);
 
 		if (dbCommand->ExecuteNonQuery() != 1) {

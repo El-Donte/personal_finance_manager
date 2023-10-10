@@ -59,7 +59,7 @@ System::Void personalfinancemanager::ChangeCards::button_Ok_Click(System::Object
         OleDbConnection^ dbConnection = gcnew OleDbConnection(connectionString);
 
         dbConnection->Open();
-        String^ query = "UPDATE [Cards] SET Number = '"+number+"', Type='" + type + "',Balance=" + balance + " WHERE ID =" + id;
+        String^ query = "UPDATE [Cards] SET [Number] = '"+number+"', Type='" +type + "', Balance = " + balance + " WHERE ID = " + id;
         OleDbCommand^ dbCommand = gcnew OleDbCommand(query, dbConnection);
 
 

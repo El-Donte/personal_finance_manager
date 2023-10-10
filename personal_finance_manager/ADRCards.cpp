@@ -53,14 +53,18 @@ System::Void personalfinancemanager::ADRCards::button_Ok_Click(System::Object^ s
         while (dbReader->Read()) {
             form->count++;
         }
-        String^ id = (form->count + 1).ToString();
+        int id = (form->count + 1);
+
+        if (form->count + 1 == id) {
+            id++;
+        }
 
         query = "INSERT INTO [Cards] VALUES (?,?,?,?)";
         dbCommand = gcnew OleDbCommand(query, dbConnection);
         dbCommand->Parameters->AddWithValue("Number", number);
         dbCommand->Parameters->AddWithValue("Type", type);
         dbCommand->Parameters->AddWithValue("Balance", balance);
-        dbCommand->Parameters->AddWithValue("ID",id);
+        dbCommand->Parameters->AddWithValue("ID",id.ToString());
 
         if (dbCommand->ExecuteNonQuery() != 1) {
             MessageBox::Show("Ошибка данных", "Error");

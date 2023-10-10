@@ -55,7 +55,7 @@ System::Void personalfinancemanager::EditExpenses::button_Ok_Click(System::Objec
 
 		dbConnection->Open();
 
-		String^ query = "SELECT Balance FROM [Cards] WHERE id =" + number;
+		String^ query = "SELECT Balance FROM [Cards] WHERE Number =" +"'"+ number + "'";
 		OleDbCommand^ dbCommand = gcnew OleDbCommand(query, dbConnection);
 		OleDbDataReader^ rdr = dbCommand->ExecuteReader();
 
@@ -90,11 +90,11 @@ System::Void personalfinancemanager::EditExpenses::button_Ok_Click(System::Objec
 			return;
 		}
 
-		query = "UPDATE [Cards] SET Balance=" + "Balance" + "+" + prevsumm + " WHERE id =" + prevnumber;
+		query = "UPDATE [Cards] SET Balance=" + "Balance" + "+" + prevsumm + " WHERE Number =" + "'"+prevnumber+"'";
 		dbCommand = gcnew OleDbCommand(query, dbConnection);
 		dbCommand->ExecuteNonQuery();
 
-		query = "UPDATE [Cards] SET Balance=" + "Balance" + "-" + summ + " WHERE id =" + number;
+		query = "UPDATE [Cards] SET Balance=" + "Balance" + "-" + summ + " WHERE Number =" + "'" + number + "'";
 		dbCommand = gcnew OleDbCommand(query, dbConnection);
 
 		if (dbCommand->ExecuteNonQuery() != 1) {
